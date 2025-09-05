@@ -7,7 +7,6 @@ const durationInput = document.querySelector("#duration");
 const circle = document.querySelector("#circle");
 const perimeter = circle.getAttribute("r")*2*Math.PI;
 circle.setAttribute("stroke-dasharray",perimeter);
-let currentOffset = 0;
 let duration = null;
 const callbacks ={
     onStart(totalDuration){
@@ -16,7 +15,7 @@ const callbacks ={
     },
     onTick(timeRemaining){
         console.log("onTick");
-        let offset = perimeter * timeRemaining / duration - perimeter;
+        let offset = (perimeter * timeRemaining / duration) - perimeter;
         circle.setAttribute("stroke-dashoffset",offset);
         // offset  = (perimeter *timeRemaining)/totalDuration - perimeter
     
