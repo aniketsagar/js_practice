@@ -4,6 +4,7 @@ class Timer{
         this.startButton = startButton;
         this.pauseButton = pauseButton;
         this.intervalId = null;
+        this.INTERVAL = 50;
         console.log(this.durationInput,this.startButton,this.pauseButton);
         if(callbacks){
             this.onStart = callbacks.onStart;
@@ -17,10 +18,11 @@ class Timer{
     start = ()=>{
         console.log("Timer Started")
         if(this.onStart){
-            this.onStart();
+            console.log("this.timeRemaining", this.timeRemaining);
+            this.onStart(this.timeRemaining);
         }
         this.tick();
-        this.intervalId = setInterval(this.tick,1000)
+        this.intervalId = setInterval(this.tick, this.INTERVAL)
     };
     pause = ()=>{
        console.log("pause");
@@ -35,9 +37,9 @@ class Timer{
             }
         }else{
             if(this.onTick){
-                this.onTick();
+                this.onTick(this.timeRemaining);
             }
-            this.timeRemaining = this.timeRemaining -1; // we can do this because of getters and setters 
+            this.timeRemaining = this.timeRemaining -(this.INTERVAL/1000); // we can do this because of getters and setters 
         }
         //this.timeRemaining.value = parseFloat(this.timeRemaining.value) - 1;
        // console.log("tick", this.timeRemaining);
@@ -48,6 +50,7 @@ class Timer{
         return parseFloat(this.durationInput.value);
     };
     set timeRemaining(newTime){
-        this.durationInput.value = newTime; 
+        this.durationInput.value = newTime.toFixed(2); 
     };
 }
+

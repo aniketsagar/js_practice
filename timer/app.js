@@ -8,14 +8,18 @@ const circle = document.querySelector("#circle");
 const perimeter = circle.getAttribute("r")*2*Math.PI;
 circle.setAttribute("stroke-dasharray",perimeter);
 let currentOffset = 0;
+let duration = null;
 const callbacks ={
-    onStart(){
+    onStart(totalDuration){
+        duration = totalDuration;
         console.log("onStart");
     },
-    onTick(){
+    onTick(timeRemaining){
         console.log("onTick");
-        circle.setAttribute("stroke-dashoffset",currentOffset);
-        currentOffset = currentOffset - 50;
+        let offset = perimeter * timeRemaining / duration - perimeter;
+        circle.setAttribute("stroke-dashoffset",offset);
+        // offset  = (perimeter *timeRemaining)/totalDuration - perimeter
+    
     },
     onComplete(){
         console.log("onComplete");
