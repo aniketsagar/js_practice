@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width">
+        <title>A study in page structure</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script1.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <button id="btn1">home</button>
+            <button id="btn2">projects</button>
+        </header>
+       
+        <nav>       
+            <ul>
+                <li>home</li>
+                <li>projects</li>
+                <li>about</li>
+            </ul>
+        </nav>
+        <main>
+            <!-- <a> is used to create link-->
+            <a href="http://www.google.com">link to google</a>
+            <h1>This is the H1 Heading</h1>
+            <p>This is para 1</p>
+            <p>This is para2</p>
+            <!-- Span is a tag without any semantics which can be used to style an inline element
+             We can think about it as moving in coloumns on same row
+             in the code below span1 span2 and span3 all will be on same row 
+             without any implicit style change-->
+            <span>span1</span>
+            <span>span2</span>
+            <span>span3</span>
+            <ul>
+                <li>matrix </li>
+                <li>rows </li>
+                <li>columns</li> 
+                
+            </ul>
+            <hr>  <!-- this is a horizontal line break-->
+            <form>
+                <input type="text" name="q" placeholder="search query" />
+                <input type="submit" value="Go!" />
+                <input type="checkbox"/>
+                <input type="range" min="100" max="500"/>
+            </form>
+            <!--Div is a tag without any semantics which is used to 
+            style things on block scope i'e each div is created on a new line
+            we can think of it as covering rows-->
+            <p id="main">
+                Span is a tag without any 
+                semantics which can be used to style an inline element
+             We can think about it as moving i
+              coloumns on same row
+             in the code below span1 span2 and span3 
+             
+             
+             
+             all will be on same row 
+             without any implicit style change
+                <script>
+                    console.log("hello this is inside main para")
+                </script>
+            </p>
+            <div>div 1</div>
+            <div>div 2</div>
+            <div>div 3</div>
+            <!-- 
+                HTML also provides the <time> element for marking up times and dates in a machine-readable format. For example:
+            -->
+            <time datetime="2016-01-20">20 January 2016</time>
+            
+
+        </main>
+       <footer>Copyright</footer>
+    </body>
+</html>

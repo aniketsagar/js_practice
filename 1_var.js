@@ -1,0 +1,117 @@
+// There are following types of primitive datatypes in JS
+// undefined
+// null
+// boolean
+// string
+// symbol ?? what is this
+// bigint
+// number
+// object
+
+// a variable in js is declared using keyword var
+
+var myName; // this is init to undefined by default
+console.log(myName);
+console.log(typeof(myName));
+
+//string
+myName = "lancelot";
+console.log(myName);
+console.log(typeof(myName));
+// null
+myName = null;
+console.log(myName);
+console.log(typeof(myName));
+
+// number
+// a number literal is a floating point value in Js.There is no seperate int type
+myName = 12;
+console.log(myName);
+console.log(typeof(myName));
+
+
+// boolean
+myName = true;
+console.log (myName);
+console.log(typeof myName);
+
+
+// object
+myName = {};
+console.log(myName);
+console.log(typeof(myName));
+
+
+//symbol
+//bigint
+
+
+// There are two ways to declare variables
+// let and var
+
+var a = 10;
+var a = 20;
+console.log(a) // 20
+
+let b = 30;
+//let b = 40; // gives an error
+
+// Read only variables are declared with const <var name>
+// const apply all bounds of let like scoping etc and
+// makes the variable read only
+
+const PI = 3.14;  
+console.log(PI);
+//PI = 20;
+//console.log(PI); // error
+
+
+
+// a = 10 assigns the value 10 to variable a
+// a == 10 compares if a is equal to 10 or not
+// a === 10 compa
+
+let arr = ["a" ,1 , [2,3,4],{},{"x":1}]
+console.log( arr[0]);
+for(let i=0; i<arr.length; i++){
+    console.log( i , arr[i]);
+}
+
+// const in case of objects ( array objects etc)  behave like a reference
+// the variable will always point the same memory location
+// but the internal value of that location might change
+// so if const abc = [] we can change the internal values
+// even add or remove the values but we cannot change the type
+// so abc = {} will throw an error .. this is a unique behavior 
+const abc = [10,20,30]
+console.log(abc[0]);
+abc[0] =45;
+console.log(abc[0]);
+abc[4] = 2; // here we are changing the size of a const array
+console.log( abc[3],abc[4]);
+
+
+// arrays have push method to add data to the end of array
+
+abc.push("ticTacToe");
+console.log(abc[abc.length-1]);
+abc.push([1,2,3,10]);
+console.log(abc[abc.length-1]);
+
+//arrays have a pop method to reomve and return  value from the end of array
+console.log("length before popping :: ", abc.length);
+console.log(abc.pop());
+console.log("length after poppint :: ", abc.length); // length is decresed 
+
+
+// arrys have a shift() method which removes and returns the first value
+
+let n = ["First",1,2,3,4,[0,3,2],"abc"]
+
+console.log(n.length, n[0]);
+console.log(n.shift());
+console.log(n.length,n[0]);
+
+// arrays have an unshift() method which can add items to the front of array
+
+n.unshift("arrived in front");

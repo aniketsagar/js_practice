@@ -1,0 +1,21 @@
+:root{
+    --bg-color: rgba(153, 208, 145, 0.91);
+    --text-color: rgba(0,0,0,1);
+    --size-large: 100px;
+    --size-small: 20px;
+}
+div{
+    background: var(--bg-color);
+    color:var(--text-color);
+    text-align: center;
+    margin:var(--size-small);
+    padding:var(--size-large);
+    border-top: 5px solid red;
+    border-right: 15px dotted green;
+    border-bottom: 10px dashed blue;
+    border-left: 10px double pink;
+}
+section{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}

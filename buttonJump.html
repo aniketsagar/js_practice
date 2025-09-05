@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie-edge">
+
+        <title>Button Jump : an introduction to promises </title>
+        <link rel="stylesheet" href="">
+
+    </head>
+    <body>
+        <button id="btn">Move Me</button>
+        <script >
+            const btn = document.querySelector("#btn");
+            console.log("btn",btn);
+            btn.style.width = "100px";
+            btn.style.height = "100px";
+            btn.style.backgroundColor = "rgba(50,120,0,0.4)";
+            // callback version
+            
+            // const moveX = (element, amount, delay,success, failure)=>{
+            //     setTimeout(()=>{
+            //         const bodyBoundry = document.body.clientWidth;
+            //         const elRight = element.getBoundingClientRect().right;
+            //         const currLeft = element.getBoundingClientRect().left;
+            //         if(elRight + amount > bodyBoundry){
+            //             failure();
+            //         }else{
+            //             element.style.transform = `translateX(${currLeft+amount}px)`;
+            //             success();
+            //         }
+            //     },delay)
+            // }
+
+            // moveX(btn,300,1000,()=>{
+            //     moveX(btn, 300, 1000, ()=>{
+            //         moveX(btn, 300, 1000, ()=>{
+            //             moveX(btn, 300, 1000, ()=>{
+            //                 moveX(btn, 300, 1000, ()=>{
+            //                     alert(
+            //                         " wow so much space!!!"
+            //                     )
+            //                 },()=>{
+            //                     alert("No space left!!");
+            //                 } )
+            //             },()=>{
+            //                 alert("No space left!!");
+            //             } )
+            //         },()=>{
+            //             alert("No space left!!");
+            //         } )
+            //     },()=>{
+            //         alert("No space left!!");
+            //     } )
+            // },()=>{
+            //     alert("No space left!!");
+            // })
+
+
+
+            // promise version 
+            const moveXPromise = (element, amount, delay)=>{
+                return new Promise((resolve, reject)=>{
+                    setTimeout(()=>{
+                        const bodyBoundry = document.body.clientWidth;
+                        const elRight = element.getBoundingClientRect().right;
+                        const currLeft = element.getBoundingClientRect().left;
+                        if(elRight + amount > bodyBoundry){
+                           reject();
+                        }else{
+                            element.style.transform = `translateX(${currLeft+amount}px)`;
+                            resolve();
+                        }
+                    },delay)
+                });
+            }
+
+            moveXPromise(btn,200,1000).then(()=>{
+                return moveXPromise(btn,200,1000);
+            }).then(()=>{
+                return moveXPromise(btn,200,1000);
+            }).then(()=>{
+                return moveXPromise(btn,200,1000);
+            }).then(()=>{
+                return moveXPromise(btn,200,1000);
+            }).catch(()=>{
+                console.log("Out of space~~~")
+            })
+           
+        </script>
+       
+
+
+    </body>
+</html>
