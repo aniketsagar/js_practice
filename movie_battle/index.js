@@ -10,7 +10,6 @@ async function searchMoviesbyTitle(title){
     params["apikey"] = APIKEY;
     params["s"] = title;
     const results = await axios.get(OMDBAPI_URL,{params});
-    console.log(results);
     if(results.data.Search){
         return results.data.Search;
 
@@ -50,12 +49,14 @@ const onInput = async (event)=>{
     // this whole process for delaying input is called debounce pattern
     const movies = await searchMoviesbyTitle(event.target.value)
     console.log(movies);
+    resultsWrapper.innerHTML = "";
     dropdown.classList.add("is-active");
     for(let movie of movies){
         const option = document.createElement("a");
+        const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
         option.classList.add("dropdown-item");
         option.innerHTML = `
-            <img src= "${movie.Poster}"/>
+            <img src= "${imgSrc}"/>
             ${movie.Title}
         `;
         resultsWrapper.appendChild(option);
