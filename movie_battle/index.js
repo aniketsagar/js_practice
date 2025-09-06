@@ -8,6 +8,7 @@ async function searchMoviesbyTitle(title){
     params["apikey"] = APIKEY;
     params["s"] = title;
     const results = await axios.get(OMDBAPI_URL,{params});
+    //console.log(results.data);
     return results.data;
 };
 
@@ -20,17 +21,28 @@ const getMovieById = async function(imdbId){
     return response.data;
 
 };
+let timeoutId = null;
+const onInput = (event)=>{
 
+    if(timeoutId){
+        clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout( ()=>{
+        searchMoviesbyTitle(event.target.value)
+        .then((res)=>{
+            console.log("movie data", res);
+            // const movieData = getMovieById(res.Search[1].imdbID);
+            // return movieData;
+        }).catch((err)=>{
+            console.log(err);
+        })
+        
+    },1000);
+    
+};
 // console.log(getMovies());
 const input = document.querySelector("input");
-input.addEventListener("input",(event)=>{
-    searchMoviesbyTitle(event.target.value)
-    .then((res)=>{
-        console.log("movie data", res);
-    }).catch((e)=>{
-        console.log(e);
-    })
-});
+input.addEventListener("input", onInput);
 // searchMoviesbyTitle("avengers")
 // .then((res)=>{
 //     console.log("movie data", res);
