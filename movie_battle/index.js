@@ -42,32 +42,42 @@ const getMovieById = async function(imdbId){
 //     });
         
 // };
+
+
+
+
 const onInput = async (event)=>{
     // this whole process for delaying input is called debounce pattern
     const movies = await searchMoviesbyTitle(event.target.value)
     console.log(movies);
-
+    dropdown.classList.add("is-active");
     for(let movie of movies){
-        const div = document.createElement("div");
-        div.innerHTML = `
+        const option = document.createElement("a");
+        option.classList.add("dropdown-item");
+        option.innerHTML = `
             <img src= "${movie.Poster}"/>
-            <h1>${movie.Title}</h1>
+            ${movie.Title}
         `;
-        document.querySelector("#movieInfo").appendChild(div);
+        resultsWrapper.appendChild(option);
     };
         
 };
 
+
+const root = document.querySelector(".autocomplete");
+root.innerHTML = `
+    <label><b>Search for a movie </b></label>
+    <input class="input"/>
+    <div class="dropdown">
+        <div class="dropdown-menu">
+            <div class="dropdown-content results"></div>
+        </div>
+    </div>
+`;
+
+
 // console.log(getMovies());
 const input = document.querySelector("input");
+const dropdown = document.querySelector(".dropdown");
+const resultsWrapper = document.querySelector(".results");
 input.addEventListener("input", debounce(onInput,DEBOUNCE_DELAY));
-// searchMoviesbyTitle("avengers")
-// .then((res)=>{
-//     console.log("movie data", res);
-//     const movieData = getMovieById(res.Search[1].imdbID);
-//     return movieData;
-// })
-// .then((data)=>{
-//     console.log(data);
-
-// });
