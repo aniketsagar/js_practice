@@ -41,6 +41,15 @@ const onInput = async (event)=>{
     // this whole process for delaying input is called debounce pattern
     const movies = await searchMoviesbyTitle(event.target.value)
     console.log(movies);
+
+    for(let movie of movies){
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <img src= "${movie.Poster}"/>
+            <h1>${movie.Title}</h1>
+        `;
+        document.querySelector("#movieInfo").appendChild(div);
+    };
         
 };
 
