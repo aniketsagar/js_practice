@@ -22,14 +22,22 @@ const getMovieById = async function(imdbId){
 };
 
 // console.log(getMovies());
-
-searchMoviesbyTitle("avengers")
-.then((res)=>{
-    console.log("movie data", res);
-    const movieData = getMovieById(res.Search[1].imdbID);
-    return movieData;
-})
-.then((data)=>{
-    console.log(data);
-
+const input = document.querySelector("input");
+input.addEventListener("input",(event)=>{
+    searchMoviesbyTitle(event.target.value)
+    .then((res)=>{
+        console.log("movie data", res);
+    }).catch((e)=>{
+        console.log(e);
+    })
 });
+// searchMoviesbyTitle("avengers")
+// .then((res)=>{
+//     console.log("movie data", res);
+//     const movieData = getMovieById(res.Search[1].imdbID);
+//     return movieData;
+// })
+// .then((data)=>{
+//     console.log(data);
+
+// });
