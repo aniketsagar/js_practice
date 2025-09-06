@@ -3,6 +3,7 @@ console.log('Hi there!');
 
 const APIKEY = "491e8064";
 const OMDBAPI_URL = "http://www.omdbapi.com/";
+const DEBOUNCE_DELAY = 500;
 async function searchMoviesbyTitle(title){
     const params = {}
     params["apikey"] = APIKEY;
@@ -22,27 +23,35 @@ const getMovieById = async function(imdbId){
 
 };
 let timeoutId = null;
-const onInput = (event)=>{
+// debounce pattern
+const debounce = (func,delayMs = 1000)=>{
+    let timeoutId = null; 
+    return (...args)=>{   // ...args is multiple args
+        if(timeoutId){
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(()=>{
+            func.apply(null,args); // apply calls the function after applying arguments to it
+        },delayMs)
+    };
+}; 
 
-    if(timeoutId){
-        clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout( ()=>{
-        searchMoviesbyTitle(event.target.value)
-        .then((res)=>{
-            console.log("movie data", res);
-            // const movieData = getMovieById(res.Search[1].imdbID);
-            // return movieData;
-        }).catch((err)=>{
-            console.log(err);
-        })
+const onInput = (event)=>{
+    // this whole process for delaying input is called debounce pattern
+    searchMoviesbyTitle(event.target.value)
+    .then((res)=>{
+        console.log("movie data", res);
+        // const movieData = getMovieById(res.Search[1].imdbID);
+        // return movieData;
+    }).catch((err)=>{
+        console.log(err);
+    });
         
-    },1000);
-    
 };
+
 // console.log(getMovies());
 const input = document.querySelector("input");
-input.addEventListener("input", onInput);
+input.addEventListener("input", debounce(onInput,DEBOUNCE_DELAY));
 // searchMoviesbyTitle("avengers")
 // .then((res)=>{
 //     console.log("movie data", res);
