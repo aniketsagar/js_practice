@@ -93,6 +93,9 @@ root.innerHTML = `
 `;
 
 const movieTemplate = (movieDetails)=>{
+    /**
+     * We have to figure out how to structure and compose this screen
+     */
     return `
         <article class="media">
             <figure class="media-left>
@@ -107,7 +110,27 @@ const movieTemplate = (movieDetails)=>{
                     <p>${movieDetails.Plot}</p>
                 </div>
             </div>
-        </artical>
+        </article>
+        <article class="notification is-primary">
+            <p class="title">${movieDetails.Awards}</p>
+            <p class="subtitle">Awards</p>
+        </article>
+        <article class="notification is-primary">
+            <p class="title">${movieDetails.BoxOffice}</p>
+            <p class="subtitle">Box Office</p>
+        </article>
+        <article class="notification is-primary">
+            <p class="title">${movieDetails.Metascore}</p>
+            <p class="subtitle">Metascore</p>
+        </article>
+        <article class="notification is-primary">
+            <p class="title">${movieDetails.imdbRating}</p>
+            <p class="subtitle">IMDB Rating</p>
+        </article>
+        <article class="notification is-primary">
+            <p class="title">${movieDetails.imdbVotes}</p>
+            <p class="subtitle">IMDB Votes</p>
+        </article>
     `;
 };
 // console.log(getMovies());
