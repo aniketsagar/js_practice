@@ -24,9 +24,18 @@ const getMovieById = async function(imdbId){
         "i": imdbId
     }
     const response = await axios.get(OMDBAPI_URL,{params});
-    document.querySelector("#summary").innerHTML= movieTemplate(response.data);
-    //return response.data;
+   
+    return response.data;
 };
+
+const onMovieSelect = async (movie,targetElement)=>{
+    console.log(movie)
+    const response = await getMovieById(movie.imdbID);
+    console.log(response)
+    targetElement.innerHTML= movieTemplate(response);
+};
+
+
  // in the below function we are using .then which is also a  correct way
  // but we want to use await hence changing the implementation
  // we aren't throwing any errors to log though 
@@ -52,20 +61,23 @@ const renderOptions = (movie) => {
 
     `;
 };
-const onOptionSelect = (movie)=>{
-    document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
-    getMovieById(movie.imdbID);
-};
+/**
+ * This function is now being sent in the call object directly
+ * @param {} movie 
+ * @returns 
+ */
+// const onOptionSelect = (movie, targetElement)=>{
+//     document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
+//     onMovieSelect(movie.imdbID,targetElement);
+// };
 const inputValue = (movie)=>{
     return movie.Title;
 }
 
 const autoCompleteConfig = {
     renderOption: renderOptions,  
-    onOptionSelect: onOptionSelect,
     inputValue: inputValue,
     fetchData: searchMoviesbyTitle
-
 };
 
 /**
@@ -79,11 +91,20 @@ const autoCompleteConfig = {
 createAutoComplete({
     ...autoCompleteConfig,   
     root: document.querySelector("#left-autocomplete"),
+    onOptionSelect(movie){
+        document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
+        onMovieSelect(movie, document.querySelector("#left-autocomplete"));
+    }
 });
 
 createAutoComplete({
     ...autoCompleteConfig,
     root: document.querySelector("#right-autocomplete"),
+    onOptionSelect(movie){
+        document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
+        onMovieSelect(movie, document.querySelector("#right-autocomplete"));
+    }
+    
 });
 
 
@@ -91,6 +112,7 @@ const movieTemplate = (movieDetails)=>{
     /**
      * We have to figure out how to structure and compose this screen
      */
+    console.log("moviedeteilas",movieDetails)
     return `
         <article class="media">
             <figure class="media-left>
