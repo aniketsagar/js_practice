@@ -58,12 +58,17 @@ const onOptionSelect = (movie)=>{
 const inputValue = (movie)=>{
     return movie.Title;
 }
-createAutoComplete({
+
+const autoCompleteConfig = {
     root: document.querySelector(".autocomplete"),
     renderOption: renderOptions,
     onOptionSelect: onOptionSelect,
-    inputValue: inputValue
-});
+    inputValue: inputValue,
+    fetchData: searchMoviesbyTitle
+
+};
+
+createAutoComplete(autoCompleteConfig);
 
 
 const movieTemplate = (movieDetails)=>{

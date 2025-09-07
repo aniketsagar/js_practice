@@ -1,7 +1,7 @@
-const createAutoComplete = ({root,renderOption,onOptionSelect,inputValue}) => {
+const createAutoComplete = ({root,renderOption,onOptionSelect,inputValue,fetchData}) => {
     
     root.innerHTML = `
-        <label><b>Search for a movie </b></label>
+        <label><b>Search </b></label>
         <input class="input"/>
         <div class="dropdown">
             <div class="dropdown-menu">
@@ -15,30 +15,31 @@ const createAutoComplete = ({root,renderOption,onOptionSelect,inputValue}) => {
 
     const onInput = async (event)=>{
         // this whole process for delaying input is called debounce pattern
-        const movies = await searchMoviesbyTitle(event.target.value)
-        if(!movies.length){
+       // const movies = await searchMoviesbyTitle(event.target.value)
+       const items = await fetchData(event.target.value)
+        if(!items.length){
             dropdown.classList.remove("is-active");
             return;
         }
-        console.log(movies);
+        console.log(items);
         resultsWrapper.innerHTML = "";
         dropdown.classList.add("is-active");
-        for(let movie of movies){
+        for(let item of items){
             const option = document.createElement("a");
         
             option.classList.add("dropdown-item");
-            option.innerHTML = renderOption(movie);
+            option.innerHTML = renderOption(item);
             /**
              * when user clicks on the item in dropdown 
              * 1. close the dropdown
-             * 2. Populate the input with the movie name in dropdown
-             * 3. Make a fetch call to get details of that movie
+             * 2. Populate the input with the item name in dropdown
+             * 3. do something on option selection  onOptionSelect(item);
              * 4. Render those details on the screen 
              */
             option.addEventListener("click",()=>{
                 dropdown.classList.remove("is-active");
-                input.value = inputValue(movie);
-                onOptionSelect(movie);
+                input.value = inputValue(item);
+                onOptionSelect(item);
             });
             resultsWrapper.appendChild(option);
         };
