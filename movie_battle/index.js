@@ -53,6 +53,7 @@ const renderOptions = (movie) => {
     `;
 };
 const onOptionSelect = (movie)=>{
+    document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
     getMovieById(movie.imdbID);
 };
 const inputValue = (movie)=>{
