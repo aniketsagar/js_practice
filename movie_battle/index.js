@@ -63,6 +63,17 @@ const onInput = async (event)=>{
             <img src= "${imgSrc}"/>
             ${movie.Title}
         `;
+        /**
+         * when user clicks on the item in dropdown 
+         * 1. close the dropdown
+         * 2. Populate the input with the movie name in dropdown
+         * 3. Make a fetch call to get details of that movie
+         * 4. Render those details on the screen 
+         */
+        option.addEventListener("click",()=>{
+            dropdown.classList.remove("is-active");
+            input.value = movie.Title;
+        });
         resultsWrapper.appendChild(option);
     };
         
