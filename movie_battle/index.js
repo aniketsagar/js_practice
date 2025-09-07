@@ -24,7 +24,8 @@ const getMovieById = async function(imdbId){
         "i": imdbId
     }
     const response = await axios.get(OMDBAPI_URL,{params});
-    return response.data;
+    document.querySelector("#summary").innerHTML= movieTemplate(response.data);
+    //return response.data;
 };
  // in the below function we are using .then which is also a  correct way
  // but we want to use await hence changing the implementation
@@ -73,6 +74,7 @@ const onInput = async (event)=>{
         option.addEventListener("click",()=>{
             dropdown.classList.remove("is-active");
             input.value = movie.Title;
+            getMovieById(movie.imdbID);
         });
         resultsWrapper.appendChild(option);
     };
@@ -90,7 +92,24 @@ root.innerHTML = `
     </div>
 `;
 
-
+const movieTemplate = (movieDetails)=>{
+    return `
+        <article class="media">
+            <figure class="media-left>
+                <p class="image">
+                    <img src="${movieDetails.Poster}" />
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <h1>${movieDetails.Title}</h1>
+                    <h4>${movieDetails.Genre}</h4>
+                    <p>${movieDetails.Plot}</p>
+                </div>
+            </div>
+        </artical>
+    `;
+};
 // console.log(getMovies());
 const input = document.querySelector("input");
 const dropdown = document.querySelector(".dropdown");
