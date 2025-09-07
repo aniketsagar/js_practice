@@ -48,6 +48,10 @@ const getMovieById = async function(imdbId){
 const onInput = async (event)=>{
     // this whole process for delaying input is called debounce pattern
     const movies = await searchMoviesbyTitle(event.target.value)
+    if(!movies.length){
+        dropdown.classList.remove("is-active");
+        return;
+    }
     console.log(movies);
     resultsWrapper.innerHTML = "";
     dropdown.classList.add("is-active");
@@ -63,7 +67,6 @@ const onInput = async (event)=>{
     };
         
 };
-
 
 const root = document.querySelector(".autocomplete");
 root.innerHTML = `
@@ -82,3 +85,23 @@ const input = document.querySelector("input");
 const dropdown = document.querySelector(".dropdown");
 const resultsWrapper = document.querySelector(".results");
 input.addEventListener("input", debounce(onInput,DEBOUNCE_DELAY));
+
+/**
+ * event bubbles in javascript >>> this is important here
+ * To close the menu when a user clicks anywhere else apart from the dropdown
+ * We are going to use <element>.contains(x) function this is true if x is a child
+ * somewhere in element and false if x is a sibling or parent of that element
+ * so what we can do is: 
+ * we add an event listener for click on document,
+ * get event.target -> this tells us what't the target of that event
+ * in our case we want it to be dropdown elements ie. label, input, or content
+ * so we check 
+ * if our desired element ie. root in our case contains the event target
+ * then we keep the dropdown open else we close it
+ */
+
+document.addEventListener("click",(event)=>{
+    if(!root.contains(event.target)){
+        dropdown.classList.remove("is-active");
+    };
+});
