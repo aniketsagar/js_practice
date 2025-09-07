@@ -28,14 +28,40 @@ const getMovieById = async function(imdbId){
     return response.data;
 };
 
-const onMovieSelect = async (movie,targetElement)=>{
-    console.log(movie)
+
+let leftMovie;
+let rightMovie;
+const onMovieSelect = async (movie,targetElement,side)=>{
+    console.log(side)
     const response = await getMovieById(movie.imdbID);
-    console.log(response)
+    console.log("onMovieSelect-->",response)
+    if(side === "left"){
+        leftMovie = response;
+    }else{
+        rightMovie = response;
+    }
+    console.log(leftMovie , rightMovie)
+    if( leftMovie && rightMovie){
+        compareMovies();
+    }
     targetElement.innerHTML= movieTemplate(response);
 };
 
-
+const compareMovies = ()=>{
+    /**
+     * we can add data-value in the article 
+     * and compare adjecent articles 
+     * 
+     * I don't agree with this approach
+     * I think a better approach will be 
+     * that we give ids to articles when creating them
+     * and then we query these inside the left and right autocomplete
+     * and then we compare the articles 
+     * 
+     */
+   
+    console.log("time for comparision")
+};
  // in the below function we are using .then which is also a  correct way
  // but we want to use await hence changing the implementation
  // we aren't throwing any errors to log though 
@@ -93,7 +119,7 @@ createAutoComplete({
     root: document.querySelector("#left-autocomplete"),
     onOptionSelect(movie){
         document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
-        onMovieSelect(movie, document.querySelector("#left-autocomplete"));
+        onMovieSelect(movie, document.querySelector("#left-autocomplete"),"left");
     }
 });
 
@@ -102,16 +128,41 @@ createAutoComplete({
     root: document.querySelector("#right-autocomplete"),
     onOptionSelect(movie){
         document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
-        onMovieSelect(movie, document.querySelector("#right-autocomplete"));
+        onMovieSelect(movie, document.querySelector("#right-autocomplete"),"right");
     }
     
 });
-
 
 const movieTemplate = (movieDetails)=>{
     /**
      * We have to figure out how to structure and compose this screen
      */
+    const dollars = parseInt(movieDetails.BoxOffice.replace(/\$/g,"").replace(/,/g,""));
+    const metascore = parseInt(movieDetails.Metascore);
+    const imdbRating = parseFloat(movieDetails.imdbRating);
+    const imdbVotes = parseInt(movieDetails.imdbVotes.replace(/,/g,""));
+    /**
+     * this next  pattern is changed into reduce just below this
+     */
+    // let count = 0;
+    // const awardsWeak = movieDetails.Awards.split(" ").forEach((word)=>{
+    //     const value = parseInt(word);
+    //     if(isNaN(value)){
+    //         return; // we are using return instead of continue becaues here for each is calling a function with next value
+    //     }else{
+    //         count += value;
+    //     }
+    // });
+
+    const awardsWeak = movieDetails.Awards.split(" ").reduce((prev,word)=>{
+        const value = parseInt(word);
+        if(isNaN(value)){
+            return prev; // we are using return instead of continue becaues here for each is calling a function with next value
+        }else{
+            return prev += value;
+        }
+    },0);
+    console.log(dollars,metascore,imdbVotes,imdbRating, awardsWeak);
     console.log("moviedeteilas",movieDetails)
     return `
         <article class="media">
