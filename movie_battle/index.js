@@ -43,54 +43,19 @@ const getMovieById = async function(imdbId){
         
 // };
 
-
-
-
-const onInput = async (event)=>{
-    // this whole process for delaying input is called debounce pattern
-    const movies = await searchMoviesbyTitle(event.target.value)
-    if(!movies.length){
-        dropdown.classList.remove("is-active");
-        return;
-    }
-    console.log(movies);
-    resultsWrapper.innerHTML = "";
-    dropdown.classList.add("is-active");
-    for(let movie of movies){
-        const option = document.createElement("a");
-        const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
-        option.classList.add("dropdown-item");
-        option.innerHTML = `
-            <img src= "${imgSrc}"/>
-            ${movie.Title}
-        `;
-        /**
-         * when user clicks on the item in dropdown 
-         * 1. close the dropdown
-         * 2. Populate the input with the movie name in dropdown
-         * 3. Make a fetch call to get details of that movie
-         * 4. Render those details on the screen 
-         */
-        option.addEventListener("click",()=>{
-            dropdown.classList.remove("is-active");
-            input.value = movie.Title;
-            getMovieById(movie.imdbID);
-        });
-        resultsWrapper.appendChild(option);
-    };
-        
-};
-
 const root = document.querySelector(".autocomplete");
-root.innerHTML = `
-    <label><b>Search for a movie </b></label>
-    <input class="input"/>
-    <div class="dropdown">
-        <div class="dropdown-menu">
-            <div class="dropdown-content results"></div>
-        </div>
-    </div>
-`;
+
+createAutoComplete({
+    root: document.querySelector(".autocomplete")
+});
+
+createAutoComplete({
+    root: document.querySelector(".autocomplete-2")
+});
+
+createAutoComplete({
+    root: document.querySelector(".autocomplete-3")
+});
 
 const movieTemplate = (movieDetails)=>{
     /**
@@ -133,11 +98,6 @@ const movieTemplate = (movieDetails)=>{
         </article>
     `;
 };
-// console.log(getMovies());
-const input = document.querySelector("input");
-const dropdown = document.querySelector(".dropdown");
-const resultsWrapper = document.querySelector(".results");
-input.addEventListener("input", debounce(onInput,DEBOUNCE_DELAY));
 
 /**
  * event bubbles in javascript >>> this is important here
