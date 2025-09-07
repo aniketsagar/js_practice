@@ -60,15 +60,30 @@ const inputValue = (movie)=>{
 }
 
 const autoCompleteConfig = {
-    root: document.querySelector(".autocomplete"),
-    renderOption: renderOptions,
+    renderOption: renderOptions,  
     onOptionSelect: onOptionSelect,
     inputValue: inputValue,
     fetchData: searchMoviesbyTitle
 
 };
 
-createAutoComplete(autoCompleteConfig);
+/**
+ * {...a, x:y}  .. this will copy everything in object "a" 
+ * into this new object and add a new entry x:y in the new object
+ * {
+    ...autoCompleteConfig,   
+    root: document.querySelector("#left-autocomplete"),
+    }
+ */
+createAutoComplete({
+    ...autoCompleteConfig,   
+    root: document.querySelector("#left-autocomplete"),
+});
+
+createAutoComplete({
+    ...autoCompleteConfig,
+    root: document.querySelector("#right-autocomplete"),
+});
 
 
 const movieTemplate = (movieDetails)=>{

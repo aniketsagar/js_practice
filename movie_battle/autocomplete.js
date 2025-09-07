@@ -10,9 +10,6 @@ const createAutoComplete = ({root,renderOption,onOptionSelect,inputValue,fetchDa
         </div>
     `;
 
-
-    
-
     const onInput = async (event)=>{
         // this whole process for delaying input is called debounce pattern
        // const movies = await searchMoviesbyTitle(event.target.value)
