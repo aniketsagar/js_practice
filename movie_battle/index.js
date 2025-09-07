@@ -32,9 +32,10 @@ const getMovieById = async function(imdbId){
 let leftMovie;
 let rightMovie;
 const onMovieSelect = async (movie,targetElement,side)=>{
-    console.log(side)
+    //console.log(side)
     const response = await getMovieById(movie.imdbID);
-    console.log("onMovieSelect-->",response)
+    //console.log("onMovieSelect-->",response)
+    targetElement.innerHTML= movieTemplate(response);
     if(side === "left"){
         leftMovie = response;
     }else{
@@ -44,7 +45,7 @@ const onMovieSelect = async (movie,targetElement,side)=>{
     if( leftMovie && rightMovie){
         compareMovies();
     }
-    targetElement.innerHTML= movieTemplate(response);
+   
 };
 
 const compareMovies = ()=>{
@@ -59,8 +60,39 @@ const compareMovies = ()=>{
      * and then we compare the articles 
      * 
      */
-   
-    console.log("time for comparision")
+    
+    /**
+     * <article data-value=${imdbRating} class="notification is-primary">
+            <p class="title">${movieDetails.imdbRating}</p>
+            <p class="subtitle">IMDB Rating</p>
+        </article>
+        the data-value can be accessed as element.dataset.value
+     */
+    const leftSideStats = document.querySelectorAll("#left-summary .notification")
+    const rightSideStats = document.querySelectorAll("#right-summary .notification")
+
+
+    leftSideStats.forEach((leftStat, index)=>{
+        const rightStat = rightSideStats[index];
+        const leftSideValue = parseInt(leftStat.dataset.value);
+        const rightSideValue = parseInt(rightStat.dataset.value);
+
+        if(rightSideValue > leftSideValue){
+            leftStat.classList.remove("is-primary");
+            leftStat.classList.add("is-warning");
+
+        }else{
+            rightStat.classList.remove("is-primary");
+            rightStat.classList.add("is-warning");
+        }
+       // console.log(leftStat,rightStat);
+    });
+     
+
+    // console.log("leftSideStats", leftSideStats);
+    // console.log("rightSideStats",rightSideStats);
+
+    // console.log("time for comparision")
 };
  // in the below function we are using .then which is also a  correct way
  // but we want to use await hence changing the implementation
@@ -119,7 +151,7 @@ createAutoComplete({
     root: document.querySelector("#left-autocomplete"),
     onOptionSelect(movie){
         document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
-        onMovieSelect(movie, document.querySelector("#left-autocomplete"),"left");
+        onMovieSelect(movie, document.querySelector("#left-summary"),"left");
     }
 });
 
@@ -128,7 +160,7 @@ createAutoComplete({
     root: document.querySelector("#right-autocomplete"),
     onOptionSelect(movie){
         document.querySelector(".tutorial").classList.add("is-hidden"); // classes are from bulma css
-        onMovieSelect(movie, document.querySelector("#right-autocomplete"),"right");
+        onMovieSelect(movie, document.querySelector("#right-summary"),"right");
     }
     
 });
@@ -163,7 +195,7 @@ const movieTemplate = (movieDetails)=>{
         }
     },0);
     console.log(dollars,metascore,imdbVotes,imdbRating, awardsWeak);
-    console.log("moviedeteilas",movieDetails)
+   // console.log("moviedeteilas",movieDetails)
     return `
         <article class="media">
             <figure class="media-left>
@@ -201,3 +233,6 @@ const movieTemplate = (movieDetails)=>{
         </article>
     `;
 };
+
+
+//
