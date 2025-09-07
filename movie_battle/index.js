@@ -44,18 +44,27 @@ const getMovieById = async function(imdbId){
 // };
 
 const root = document.querySelector(".autocomplete");
+const renderOptions = (movie) => {
+    const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
+    return `
+        <img src= "${imgSrc}"/>
+        ${movie.Title}(${movie.Year})
 
+    `;
+};
+const onOptionSelect = (movie)=>{
+    getMovieById(movie.imdbID);
+};
+const inputValue = (movie)=>{
+    return movie.Title;
+}
 createAutoComplete({
-    root: document.querySelector(".autocomplete")
+    root: document.querySelector(".autocomplete"),
+    renderOption: renderOptions,
+    onOptionSelect: onOptionSelect,
+    inputValue: inputValue
 });
 
-createAutoComplete({
-    root: document.querySelector(".autocomplete-2")
-});
-
-createAutoComplete({
-    root: document.querySelector(".autocomplete-3")
-});
 
 const movieTemplate = (movieDetails)=>{
     /**
