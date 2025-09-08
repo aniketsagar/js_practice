@@ -12,36 +12,80 @@
     -> matterjs collision detections
 */
 
-// module aliases
-var Engine = Matter.Engine,
-    Render = Matter.Render,
-    Runner = Matter.Runner,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite;
+/**
+ * world --- this object contains everything for any 
+ *           given instance of time  in our matters app 
+ * Engine -- reads the current state of our world 
+ *           and calculate the change in position of the object
+ *           inside our world 
+ * Runner -- This runs <framerate> times per second and passes on information
+ *            from world to engine for calculating updates
+ * Render -- After the update in states of bodies in our world by engine
+ *           Render method will check the state and show the updated states 
+ *           on screen
+ * body -- these are all the objects on our screen 
+ *            
+ */
+// // module aliases
+// const Engine = Matter.Engine,
+//     Render = Matter.Render,
+//     Runner = Matter.Runner,
+//     Bodies = Matter.Bodies,
+//     Composite = Matter.Composite;
 
-// create an engine
-var engine = Engine.create();
+// // create an engine
+// const engine = Engine.create();
 
-// create a renderer
-var render = Render.create({
-    element: document.body,
-    engine: engine,
-       wireframes: false
+// // create a renderer
+// var render = Render.create({
+//     element: document.body,
+//     engine: engine,
+//        wireframes: false
+// });
+
+// // create two boxes and a ground
+// var boxA = Bodies.rectangle(400, 200, 80, 80);
+// var boxB = Bodies.rectangle(450, 50, 80, 80);
+// var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+
+// // add all of the bodies to the world
+// Composite.add(engine.world, [boxA, boxB, ground]);
+
+// // run the renderer
+// Render.run(render);
+
+// // create runner
+// var runner = Runner.create();
+
+// // run the engine
+// Runner.run(runner, engine);
+
+
+
+const {Engine, Render, Runner, Bodies, Composite, World } = Matter;
+const CANVAS_HEIGHT = 600;
+const CANVAS_WIDHT = 800;
+// create engine
+const  engine = Engine.create();
+const { world } = engine;
+
+//create a renderer 
+const render = Render.create({
+    element : document.body,
+    engine: engine, 
+    options: {
+        width: CANVAS_WIDHT,
+        height: CANVAS_HEIGHT
+    },
 });
 
-// create two boxes and a ground
-var boxA = Bodies.rectangle(400, 200, 80, 80);
-var boxB = Bodies.rectangle(450, 50, 80, 80);
-var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 
-// add all of the bodies to the world
-Composite.add(engine.world, [boxA, boxB, ground]);
-
-// run the renderer
 Render.run(render);
+Runner.run(Runner.create(), engine);
 
-// create runner
-var runner = Runner.create();
+const shape = Bodies.rectangle(200,200,50,50 ,{
+    isStatic: true
+});
 
-// run the engine
-Runner.run(runner, engine);
+World.add(world, shape);
+console.log(world)
