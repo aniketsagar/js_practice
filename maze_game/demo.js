@@ -4,6 +4,27 @@
  * 4 rectangles along the edges for walls 
  * various shapes that can be interacted with mouse 
  */
+
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * The value is no lower than min (or the next integer greater than min
+ * if min isn't an integer) and no greater than max (or the next integer
+ * lower than max if max isn't an integer).
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const {Engine, Render, Runner, Bodies, Composite, World, MouseConstraint,Mouse } = Matter;
 const CANVAS_HEIGHT = 600;
 const CANVAS_WIDTH = 800;
@@ -17,7 +38,8 @@ const render = Render.create({
     engine: engine, 
     options: {
         width: CANVAS_WIDTH,
-        height: CANVAS_HEIGHT
+        height: CANVAS_HEIGHT,
+        wireframes:false   // set solid  colors 
     },
 });
 
@@ -74,8 +96,28 @@ const walls =[
  * Matter.Bodies.trapezoid(x, y, width, height, slope, [options]) 
  * 
  */
+const RANDOM_OBJECT_COUNT = 50;
+const cx = {};
+const cy = {};
 
-
+for(let i=0; i < RANDOM_OBJECT_COUNT; i++){
+    // generate centers 
+    if(Math.random()>0.5){
+        World.add(world, 
+            Bodies.rectangle(Math.random()*CANVAS_WIDTH, Math.random()*CANVAS_HEIGHT, 
+            getRandomInt(10,70),getRandomInt(10,70))
+        );
+    }else{
+        World.add(world, 
+            Bodies.circle(Math.random()*CANVAS_WIDTH, Math.random()*CANVAS_HEIGHT, 
+            getRandomInt(20,60),{
+                render:{
+                    fillStyle:"plum"  
+                }
+            })
+        );
+    }
+};
 //add object to the world
 World.add(world, walls);
 
