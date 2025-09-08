@@ -4,7 +4,7 @@
  * 4 rectangles along the edges for walls 
  * various shapes that can be interacted with mouse 
  */
-const {Engine, Render, Runner, Bodies, Composite, World } = Matter;
+const {Engine, Render, Runner, Bodies, Composite, World, MouseConstraint,Mouse } = Matter;
 const CANVAS_HEIGHT = 600;
 const CANVAS_WIDTH = 800;
 // create engine
@@ -25,8 +25,14 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
+World.add(world,
+    MouseConstraint.create(engine,{      // Mouse Constraint gives us ability to add mouse interactions
+        mouse:Mouse.create(render.canvas)
+    })
+);
+
 const shape = Bodies.rectangle(200,200,50,50 ,{
-    isStatic: true
+    
 });
 
 // walls 
@@ -53,6 +59,25 @@ const walls =[
     }),
 ]
 
+
+// make random objects
+/**
+ * kinds of shapes we will make 
+ * 
+ * // circle 
+ * Matter.Bodies.circle(x, y, radius, [options], [maxSides]) → Body
+ * // rectangles,
+ * Matter.Bodies.rectangle(x, y, width, height, [options]) 
+ * // polygons 
+ * Matter.Bodies.polygon(x, y, sides, radius, [options]) → Body
+ * //trepezoids 
+ * Matter.Bodies.trapezoid(x, y, width, height, slope, [options]) 
+ * 
+ */
+
+
 //add object to the world
 World.add(world, walls);
+
+World.add(world, shape);
 console.log(world)
