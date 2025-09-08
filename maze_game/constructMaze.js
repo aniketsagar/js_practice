@@ -15,7 +15,11 @@
  * verticle - 2d array for verticle walls i'e wall between two latrally adjecent cells
  * horizontal - 2d array for horizontal walls i,e wall between two vertically adjecent cells 
  * 
- * grid
+ * grid  -- array we will use to see if we have visited cell 
+ * 
+ * 2d array 
+ * intialized to false
+ *          
  * [00][01][02]
  * [10][11][12]
  * [20][21][22]

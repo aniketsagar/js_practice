@@ -114,4 +114,19 @@ const walls =[
 
 World.add(world, walls);
 World.add(world, shape);
-console.log(world)
+
+
+const mygrid = [];
+for(let i = 0; i<3; i++){
+    mygrid.push([]);
+    for(let j=0; j<3; j++){
+        mygrid[i].push(false);
+    }
+};
+console.log(mygrid);
+//using map
+const grid = Array(3).fill(null).map(()=>{return Array(3).fill(false)});
+console.log(grid);
+// grid.map()
+// grid.map(()=>{return Array(3).fill(false)});
+console.log("final grid", grid);
