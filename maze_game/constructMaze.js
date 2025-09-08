@@ -26,17 +26,19 @@
  * 
  * verticle 
  * [
- *  [false,false,false] -> for walls on column 0 traversed row wise
+ *  [false,false] -> for walls on column 0 traversed row wise
  *                      what this means is that the first false is 
  *                      for a wall that exist between cell 00  and 01
  *                      the second false is for the wall that exist between 
- *                      cell 10 and cell 11 
- *                      third false is for wall between 20 and 21
- * 
- * [false,false,false] -> here the fist false is for wall that exist between
- *                        cell 01 and cell 02 and next false is for wall between
+ *                      cell 01 and cell 02 
+ *                     
+ * [false,false] -> here the fist false is for wall that exist between
+ *                        cell 10 and cell 11 and next false is for wall between
  *                         cell 11 and 12 
- *                          third false is for wall between 21 and 22
+ * 
+ * [false false ] -> here first false is for walls between cell 20 and 21
+ *                  second false is for walls between cells 21 and 22
+ *                          
  * ]
  * 
  * 

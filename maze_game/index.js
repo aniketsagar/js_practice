@@ -125,8 +125,27 @@ for(let i = 0; i<3; i++){
 };
 console.log(mygrid);
 //using map
-const grid = Array(3).fill(null).map(()=>{return Array(3).fill(false)});
+const rows = 3;
+const coloms = 3;
+const grid = Array(rows).fill(null).map(()=>{return Array(coloms).fill(false)});
 console.log(grid);
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
 console.log("final grid", grid);
+
+
+// create verticals 
+
+const varticals = Array(3)
+.fill(null)
+.map(()=>{
+    return Array(2).fill(false);
+});
+
+console.log("verticals", varticals);
+const horizontals = Array(2)
+.fill(null)
+.map(()=>{
+    return Array(3).fill(false);
+});
+console.log("horizontals",horizontals)
