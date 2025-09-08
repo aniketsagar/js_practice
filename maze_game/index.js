@@ -62,9 +62,9 @@
 
 
 
-const {Engine, Render, Runner, Bodies, Composite, World } = Matter;
+const {Engine, Render, Runner, Bodies, Composite, World} = Matter;
 const CANVAS_HEIGHT = 600;
-const CANVAS_WIDHT = 800;
+const CANVAS_WIDTH = 600;
 // create engine
 const  engine = Engine.create();
 const { world } = engine;
@@ -74,7 +74,7 @@ const render = Render.create({
     element : document.body,
     engine: engine, 
     options: {
-        width: CANVAS_WIDHT,
+        width: CANVAS_WIDTH,
         height: CANVAS_HEIGHT
     },
 });
@@ -87,5 +87,31 @@ const shape = Bodies.rectangle(200,200,50,50 ,{
     isStatic: true
 });
 
+
+// walls 
+//Matter.Bodies.rectangle(x, y, width, height, [options]) 
+// we want to make these dependent on canvas width and canvas height
+const TOP_BOTTOM_WALL_HEIGHT = 20;
+const LEFT_RIGHT_WALL_WIDTH = 20;
+const walls =[
+    // top wall
+    Bodies.rectangle(CANVAS_WIDTH/2, TOP_BOTTOM_WALL_HEIGHT /2 ,CANVAS_WIDTH,TOP_BOTTOM_WALL_HEIGHT,{
+        isStatic: true
+    }),
+    //bottom wall
+    Bodies.rectangle(CANVAS_WIDTH/2,CANVAS_HEIGHT - TOP_BOTTOM_WALL_HEIGHT/2,CANVAS_WIDTH,TOP_BOTTOM_WALL_HEIGHT,{
+        isStatic: true
+    }),
+    //left wall
+    Bodies.rectangle(LEFT_RIGHT_WALL_WIDTH/2,CANVAS_HEIGHT/2 ,LEFT_RIGHT_WALL_WIDTH,CANVAS_HEIGHT,{
+        isStatic: true
+    }),
+    //right wall
+    Bodies.rectangle(CANVAS_WIDTH - LEFT_RIGHT_WALL_WIDTH/2,CANVAS_HEIGHT/2 ,LEFT_RIGHT_WALL_WIDTH,CANVAS_HEIGHT,{
+        isStatic: true
+    }),
+]
+
+World.add(world, walls);
 World.add(world, shape);
 console.log(world)
