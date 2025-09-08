@@ -149,3 +149,20 @@ const horizontals = Array(2)
     return Array(3).fill(false);
 });
 console.log("horizontals",horizontals)
+
+const startRow  = Math.floor(Math.random()*cellRows);
+const startCol = Math.floor(Math.random()*CellCols);
+
+const visitCells = (row, col)=>{
+    // if the cell is visited at row col, then return null
+    // else
+    // Mark this cell row and col as visited
+    // Assamble rendomly ordered list of neighbours
+    // for each neighbour in the above list
+    // see if the neighbour is out of bounds 
+    // remove the above neighbour from the list 
+    // if we have visited a valid neigbour, continue to next neighbout
+    // visit the next cell
+
+
+}
