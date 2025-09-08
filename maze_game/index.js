@@ -125,9 +125,9 @@ for(let i = 0; i<3; i++){
 };
 console.log(mygrid);
 //using map
-const rows = 3;
-const coloms = 3;
-const grid = Array(rows).fill(null).map(()=>{return Array(coloms).fill(false)});
+const cellRows = 3;
+const CellCols = 3;
+const grid = Array(cellRows).fill(null).map(()=>{return Array(CellCols).fill(false)});
 console.log(grid);
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
