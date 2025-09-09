@@ -150,13 +150,13 @@ console.log("final grid", grid);
 
 // create verticals 
 
-const varticals = Array(3)
+const verticals = Array(3)
 .fill(null)
 .map(()=>{
     return Array(2).fill(false);
 });
 
-console.log("verticals", varticals);
+console.log("verticals", verticals);
 const horizontals = Array(2)
 .fill(null)
 .map(()=>{
@@ -179,17 +179,19 @@ const visitCells = (row, col)=>{
 
     // above c[row-1][col] below c[row+1][col]  right c[row][col+1] left [row][col-1]
     // the strings up down left and right will be used decide to update horizontal or verticle array
+    // we could have used row and col parameters to compare the directions
+    // but adding a string and processing the direction is a bit easier then that
     const neighbours = [
-        [row-1, col, "up"],
-        [row+1, col, "right"],
-        [row, col-1, "down"],
-        [row, col+1, "left"]
+        // [row-1, col, "up"],
+        // [row+1, col, "down"],
+        [row, col-1, "left"],
+        [row, col+1, "right"]
     ];
 
     shuffle(neighbours)
      // for each neighbour in the above list
     for(let neighbour of neighbours){
-        const [nextRow, nextColumn] = neighbour; // deconstructing array
+        const [nextRow, nextColumn, direction] = neighbour; // deconstructing array
          // see if the neighbour is out of bounds 
         if(nextRow <0 || nextRow >=cellRows || nextColumn <0 || nextColumn > CellCols){
             continue;
@@ -198,7 +200,12 @@ const visitCells = (row, col)=>{
         if(grid[nextRow][nextColumn]){
             continue;
         }
-        // remoive a wall from either verticle or horizontal
+        // remoive a wall from either verticle or horizontal array
+        if(direction === "left"){
+            verticals[row][col-1] = true;
+        }else if(direction === "right"){
+            verticals[row][col] = true;  // this is between the last and last -1 cell so col is the current col
+        }
 
     }
     console.log(neighbours);
@@ -213,4 +220,4 @@ const visitCells = (row, col)=>{
 }
 visitCells(1,1);
 //visitCells(startRow,startCol);
-console.log(grid);
+console.log(verticals);
