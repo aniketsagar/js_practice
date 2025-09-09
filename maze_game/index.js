@@ -182,10 +182,10 @@ const visitCells = (row, col)=>{
     // we could have used row and col parameters to compare the directions
     // but adding a string and processing the direction is a bit easier then that
     const neighbours = [
-        // [row-1, col, "up"],
-        // [row+1, col, "down"],
-        [row, col-1, "left"],
-        [row, col+1, "right"]
+        [row-1, col, "up"],
+        [row+1, col, "down"],
+        // [row, col-1, "left"],
+        // [row, col+1, "right"]
     ];
 
     shuffle(neighbours)
@@ -205,6 +205,10 @@ const visitCells = (row, col)=>{
             verticals[row][col-1] = true;
         }else if(direction === "right"){
             verticals[row][col] = true;  // this is between the last and last -1 cell so col is the current col
+        }else if(direction === "up"){
+            horizontals[row-1][col] = true;
+        }else if(direction==="down"){
+            horizontals[row][col]=true;
         }
 
     }
@@ -220,4 +224,4 @@ const visitCells = (row, col)=>{
 }
 visitCells(1,1);
 //visitCells(startRow,startCol);
-console.log(verticals);
+console.log(horizontals);
