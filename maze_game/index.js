@@ -137,14 +137,13 @@ for(let i = 0; i<3; i++){
         mygrid[i].push(false);
     }
 };
-console.log("mygrid",mygrid);
+
 //using map
 const CELL_ROWS = 10;
 const CELL_COLUMNS = 10;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
-console.log("final grid", grid);
 
 
 // create verticals 
@@ -162,7 +161,7 @@ const verticals = Array(CELL_ROWS)
     return Array(CELL_COLUMNS-1).fill(false);
 });
 
-console.log("verticals", verticals);
+
 // [][][][]   []
 // [][][][]
 // [][][][]
@@ -175,7 +174,7 @@ const horizontals = Array(CELL_ROWS-1)
 .map(()=>{
     return Array(CELL_COLUMNS).fill(false);
 });
-console.log("horizontals",horizontals)
+
 
 const startRow  = Math.floor(Math.random()*CELL_ROWS);
 const startCol = Math.floor(Math.random()*CELL_COLUMNS);
@@ -239,9 +238,9 @@ const visitCells = (row, col)=>{
 
 visitCells(startRow,startCol);
 //visitCells(startRow,startCol);
-console.log("grid",grid);
-console.log("verticals",verticals);
-console.log("horizontals",horizontals);
+// console.log("grid",grid);
+// console.log("verticals",verticals);
+// console.log("horizontals",horizontals);
 
 //rendering walls 
 const unitLength = CANVAS_WIDTH / CELL_COLUMNS;
@@ -249,7 +248,7 @@ const unitHeight = CANVAS_HEIGHT / CELL_ROWS;
 const HORIZONTAL_CELL_WALL_HEIGHT = 10;
 const VERTICAL_CELL_WALL_WIDHT = 10;
 horizontals.forEach((row,rowIndex)=>{
-    console.log(row)
+    
     let count = 0;
     row.forEach((open,columnIndex)=>{
         if(open){
@@ -305,5 +304,31 @@ const ball_cx = unitLength /2;
 const ball_cy = unitHeight /2 ;
 const ball_radius = (unitHeight+unitLength)/8;
 const ball = Bodies.circle(ball_cx, ball_cy, ball_radius);
+console.log("ball",ball)
 
+//World.add(world,ball);
+// Listening for keyboard input 
+
+document.addEventListener("keydown",(event)=>{
+    console.log("event",event)
+    if(event.key === "w" || event.key === "ArrowUp"){
+        console.log("move up");
+        ball.velocity.y = 5;
+    }
+
+    if(event.key === "s" || event.key === "ArrowDown"){
+        console.log("move down");
+        ball.velocity.y = -5;
+    }
+
+    if(event.key === "a" || event.key === "ArrowLeft"){
+        console.log("move left");
+        ball.velocity.x = -5;
+    }
+    if(event.key === "d" || event.key === "ArrowRight"){
+        console.log("move right");
+        ball.velocity.y = 5;
+    }
+
+});
 World.add(world,ball);
