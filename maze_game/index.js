@@ -114,7 +114,21 @@ const walls =[
 
 World.add(world, walls);
 World.add(world, shape);
+// maze generation 
 
+const shuffle = (arr)=>{
+    let counter = arr.length;
+    while(counter > 0){
+        const index = Math.floor(Math.random()*counter);
+        counter--;   // this should be here but why ??
+        const temp = arr[counter];
+        arr[counter] = arr[index];
+        arr[index] = temp; 
+
+      
+    };
+    return arr;
+};
 
 const mygrid = [];
 for(let i = 0; i<3; i++){
@@ -169,7 +183,11 @@ const visitCells = (row, col)=>{
         [row+1, col],
         [row, col-1],
         [row, col+1]
-    ]
+    ];
+
+    shuffle(neighbours)
+    console.log(neighbours);
+
     // for each neighbour in the above list
     // see if the neighbour is out of bounds 
     // remove the above neighbour from the list 
@@ -178,6 +196,6 @@ const visitCells = (row, col)=>{
 
 
 }
-
-visitCells(startRow,startCol);
+visitCells(1,1);
+//visitCells(startRow,startCol);
 console.log(grid);
