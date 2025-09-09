@@ -137,30 +137,43 @@ for(let i = 0; i<3; i++){
         mygrid[i].push(false);
     }
 };
-console.log(mygrid);
+console.log("mygrid",mygrid);
 //using map
 const cellRows = 3;
 const CellCols = 3;
 const grid = Array(cellRows).fill(null).map(()=>{return Array(CellCols).fill(false)});
-console.log(grid);
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
 console.log("final grid", grid);
 
 
 // create verticals 
-
-const verticals = Array(3)
+// [][][][]   []
+// [][][][]
+// [][][][]
+// [
+//     [f,f,f]
+//     [f,f,f]
+//     [f,f,f] 
+// ]
+const verticals = Array(cellRows)
 .fill(null)
 .map(()=>{
-    return Array(2).fill(false);
+    return Array(CellCols-1).fill(false);
 });
 
 console.log("verticals", verticals);
-const horizontals = Array(2)
+// [][][][]   []
+// [][][][]
+// [][][][]
+// [
+//   [f,f,f,f]
+//   [f,f,f,f]     
+// ]
+const horizontals = Array(cellRows-1)
 .fill(null)
 .map(()=>{
-    return Array(3).fill(false);
+    return Array(CellCols).fill(false);
 });
 console.log("horizontals",horizontals)
 
@@ -168,6 +181,7 @@ const startRow  = Math.floor(Math.random()*cellRows);
 const startCol = Math.floor(Math.random()*CellCols);
 
 const visitCells = (row, col)=>{
+    //console.log("row", row , "column",col);
     // if the cell is visited at row col, then return null
         if(grid[row][col]){
             return;
@@ -184,8 +198,8 @@ const visitCells = (row, col)=>{
     const neighbours = [
         [row-1, col, "up"],
         [row+1, col, "down"],
-        // [row, col-1, "left"],
-        // [row, col+1, "right"]
+        [row, col-1, "left"],
+        [row, col+1, "right"]
     ];
 
     shuffle(neighbours)
@@ -193,7 +207,7 @@ const visitCells = (row, col)=>{
     for(let neighbour of neighbours){
         const [nextRow, nextColumn, direction] = neighbour; // deconstructing array
          // see if the neighbour is out of bounds 
-        if(nextRow <0 || nextRow >=cellRows || nextColumn <0 || nextColumn > CellCols){
+        if(nextRow <0 || nextRow >=cellRows || nextColumn <0 || nextColumn >= CellCols){
             continue;
         }
         // if we have visited a valid neigbour, continue to next neighbout
@@ -211,17 +225,19 @@ const visitCells = (row, col)=>{
             horizontals[row][col]=true;
         }
 
-    }
-    console.log(neighbours);
+        visitCells(nextRow,nextColumn);
 
-   
-   
+    }
+   //console.log(neighbours);
+
     // remove the above neighbour from the list 
     // if we have visited a valid neigbour, continue to next neighbout
     // visit the next cell
 
 
 }
-visitCells(1,1);
+console.log("grid",grid);
+visitCells(startRow,startCol);
 //visitCells(startRow,startCol);
-console.log(horizontals);
+console.log("verticals",verticals);
+console.log("horizontals",horizontals);
