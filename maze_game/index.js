@@ -178,18 +178,33 @@ const visitCells = (row, col)=>{
     // Assamble rendomly ordered list of neighbours
 
     // above c[row-1][col] below c[row+1][col]  right c[row][col+1] left [row][col-1]
+    // the strings up down left and right will be used decide to update horizontal or verticle array
     const neighbours = [
-        [row-1, col],
-        [row+1, col],
-        [row, col-1],
-        [row, col+1]
+        [row-1, col, "up"],
+        [row+1, col, "right"],
+        [row, col-1, "down"],
+        [row, col+1, "left"]
     ];
 
     shuffle(neighbours)
+     // for each neighbour in the above list
+    for(let neighbour of neighbours){
+        const [nextRow, nextColumn] = neighbour; // deconstructing array
+         // see if the neighbour is out of bounds 
+        if(nextRow <0 || nextRow >=cellRows || nextColumn <0 || nextColumn > CellCols){
+            continue;
+        }
+        // if we have visited a valid neigbour, continue to next neighbout
+        if(grid[nextRow][nextColumn]){
+            continue;
+        }
+        // remoive a wall from either verticle or horizontal
+
+    }
     console.log(neighbours);
 
-    // for each neighbour in the above list
-    // see if the neighbour is out of bounds 
+   
+   
     // remove the above neighbour from the list 
     // if we have visited a valid neigbour, continue to next neighbout
     // visit the next cell
