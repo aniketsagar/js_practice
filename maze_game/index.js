@@ -62,11 +62,13 @@
 
 
 
-const {Engine, Render, Runner, Bodies, Composite, World, Body} = Matter;
+const {Engine, Render, Runner, Bodies, Composite, World, Body, Events} = Matter;
 const CANVAS_HEIGHT = 600;
 const CANVAS_WIDTH = 600;
 // create engine
 const  engine = Engine.create();
+engine.world.gravity.y = 0;
+//engine.world.gravity.x = 0;
 const { world } = engine;
 
 //create a renderer 
@@ -139,7 +141,7 @@ for(let i = 0; i<3; i++){
 };
 
 //using map
-const CELL_ROWS = 10;
+const CELL_ROWS = 5;
 const CELL_COLUMNS = 10;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
@@ -293,6 +295,7 @@ const goal_cy = CANVAS_HEIGHT -  unitHeight /2;
 const goal = Bodies.rectangle( goal_cx, goal_cy,
     unitLength * 0.7, 
     unitHeight * 0.7,{
+        label:"goal",
         isStatic :true
     }
 );
@@ -303,14 +306,16 @@ World.add(world,goal);
 const ball_cx = unitLength /2;
 const ball_cy = unitHeight /2 ;
 const ball_radius = (unitHeight+unitLength)/8;
-const ball = Bodies.circle(ball_cx, ball_cy, ball_radius);
-console.log("ball",ball)
+const ball = Bodies.circle(ball_cx, ball_cy, ball_radius, {
+    label:"ball"
+});
 
-//World.add(world,ball);
+
+World.add(world,ball);
 // Listening for keyboard input 
 
 document.addEventListener("keydown",(event)=>{
-    console.log("event",event)
+
     const x = ball.velocity.x;
     const y = ball.velocity.y;
     if(event.key === "w" || event.key === "ArrowUp"){
@@ -333,4 +338,19 @@ document.addEventListener("keydown",(event)=>{
     }
 
 });
-World.add(world,ball);
+
+//win conditions
+
+Events.on(engine, "collisionStart",(event)=>{
+    event.pairs.forEach((collison)=>{
+        //console.log("Collision event",collison);
+        const labels = ["ball","goal"];
+        if(
+            labels.includes(collison.bodyA.label) &&
+            labels.includes(collison.bodyB.label)
+        ){
+            console.log("User won!!!")
+        }
+    });
+    
+});
