@@ -287,6 +287,8 @@ verticals.forEach((row,rowIndex)=>{
 
 });
 
+
+//goal object
 const goal_cx = CANVAS_WIDTH - unitLength/2;
 const goal_cy = CANVAS_HEIGHT -  unitHeight /2;
 const goal = Bodies.rectangle( goal_cx, goal_cy,
@@ -297,3 +299,11 @@ const goal = Bodies.rectangle( goal_cx, goal_cy,
 );
 
 World.add(world,goal);
+
+//Ball
+const ball_cx = unitLength /2;
+const ball_cy = unitHeight /2 ;
+const ball_radius = (unitHeight+unitLength)/8;
+const ball = Bodies.circle(ball_cx, ball_cy, ball_radius);
+
+World.add(world,ball);
