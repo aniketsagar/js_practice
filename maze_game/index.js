@@ -113,7 +113,7 @@ const walls =[
 ]
 
 World.add(world, walls);
-World.add(world, shape);
+//World.add(world, shape);
 // maze generation 
 
 const shuffle = (arr)=>{
@@ -255,7 +255,7 @@ horizontals.forEach((row,rowIndex)=>{
         if(open){
             return;
         }
-        const cx = columnIndex*unitLength + unitLength/2;
+        const cx = columnIndex * unitLength + unitLength/2;
         const cy = rowIndex * unitHeight + unitHeight;
         const wall = Bodies.rectangle(cx,cy,
             unitLength,HORIZONTAL_WALL_HEIGHT,{
@@ -268,3 +268,21 @@ horizontals.forEach((row,rowIndex)=>{
 });
 
 
+
+verticals.forEach((row,rowIndex)=>{
+
+    row.forEach((open,columnIndex)=>{
+        if(open){
+            return;
+        }
+        const cx = (columnIndex+1) * unitLength;
+        const cy = rowIndex*unitHeight + unitHeight/2;
+        const wall = Bodies.rectangle(cx,cy,
+            VERTICAL_WALL_WIDHT,unitHeight,{
+                isStatic: true
+            }
+        );
+        World.add(world,wall);
+    });
+
+});
