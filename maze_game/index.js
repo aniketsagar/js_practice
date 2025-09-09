@@ -88,11 +88,11 @@ const shape = Bodies.rectangle(200,200,50,50 ,{
 });
 
 
-// walls 
+// walls bounding the canvas
 //Matter.Bodies.rectangle(x, y, width, height, [options]) 
 // we want to make these dependent on canvas width and canvas height
-const TOP_BOTTOM_WALL_HEIGHT = 20;
-const LEFT_RIGHT_WALL_WIDTH = 20;
+const TOP_BOTTOM_WALL_HEIGHT = 5;
+const LEFT_RIGHT_WALL_WIDTH = 5;
 const walls =[
     // top wall
     Bodies.rectangle(CANVAS_WIDTH/2, TOP_BOTTOM_WALL_HEIGHT /2 ,CANVAS_WIDTH,TOP_BOTTOM_WALL_HEIGHT,{
@@ -139,8 +139,8 @@ for(let i = 0; i<3; i++){
 };
 console.log("mygrid",mygrid);
 //using map
-const CELL_ROWS = 3;
-const CELL_COLUMNS = 3;
+const CELL_ROWS = 10;
+const CELL_COLUMNS = 10;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
@@ -246,8 +246,8 @@ console.log("horizontals",horizontals);
 //rendering walls 
 const unitLength = CANVAS_WIDTH / CELL_COLUMNS;
 const unitHeight = CANVAS_HEIGHT / CELL_ROWS;
-const HORIZONTAL_WALL_HEIGHT = 10;
-const VERTICAL_WALL_WIDHT = 10;
+const HORIZONTAL_CELL_WALL_HEIGHT = 10;
+const VERTICAL_CELL_WALL_WIDHT = 10;
 horizontals.forEach((row,rowIndex)=>{
     console.log(row)
     let count = 0;
@@ -258,7 +258,7 @@ horizontals.forEach((row,rowIndex)=>{
         const cx = columnIndex * unitLength + unitLength/2;
         const cy = rowIndex * unitHeight + unitHeight;
         const wall = Bodies.rectangle(cx,cy,
-            unitLength,HORIZONTAL_WALL_HEIGHT,{
+            unitLength,HORIZONTAL_CELL_WALL_HEIGHT,{
                 isStatic: true
             }
         );
@@ -278,7 +278,7 @@ verticals.forEach((row,rowIndex)=>{
         const cx = (columnIndex+1) * unitLength;
         const cy = rowIndex*unitHeight + unitHeight/2;
         const wall = Bodies.rectangle(cx,cy,
-            VERTICAL_WALL_WIDHT,unitHeight,{
+            VERTICAL_CELL_WALL_WIDHT,unitHeight,{
                 isStatic: true
             }
         );
@@ -286,3 +286,14 @@ verticals.forEach((row,rowIndex)=>{
     });
 
 });
+
+const goal_cx = CANVAS_WIDTH - unitLength/2;
+const goal_cy = CANVAS_HEIGHT -  unitHeight /2;
+const goal = Bodies.rectangle( goal_cx, goal_cy,
+    unitLength * 0.7, 
+    unitHeight * 0.7,{
+        isStatic :true
+    }
+);
+
+World.add(world,goal);
