@@ -139,9 +139,9 @@ for(let i = 0; i<3; i++){
 };
 console.log("mygrid",mygrid);
 //using map
-const cellRows = 3;
-const CellCols = 3;
-const grid = Array(cellRows).fill(null).map(()=>{return Array(CellCols).fill(false)});
+const CELL_ROWS = 3;
+const CELL_COLUMNS = 3;
+const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
 console.log("final grid", grid);
@@ -156,10 +156,10 @@ console.log("final grid", grid);
 //     [f,f,f]
 //     [f,f,f] 
 // ]
-const verticals = Array(cellRows)
+const verticals = Array(CELL_ROWS)
 .fill(null)
 .map(()=>{
-    return Array(CellCols-1).fill(false);
+    return Array(CELL_COLUMNS-1).fill(false);
 });
 
 console.log("verticals", verticals);
@@ -170,15 +170,15 @@ console.log("verticals", verticals);
 //   [f,f,f,f]
 //   [f,f,f,f]     
 // ]
-const horizontals = Array(cellRows-1)
+const horizontals = Array(CELL_ROWS-1)
 .fill(null)
 .map(()=>{
-    return Array(CellCols).fill(false);
+    return Array(CELL_COLUMNS).fill(false);
 });
 console.log("horizontals",horizontals)
 
-const startRow  = Math.floor(Math.random()*cellRows);
-const startCol = Math.floor(Math.random()*CellCols);
+const startRow  = Math.floor(Math.random()*CELL_ROWS);
+const startCol = Math.floor(Math.random()*CELL_COLUMNS);
 
 const visitCells = (row, col)=>{
     //console.log("row", row , "column",col);
@@ -207,7 +207,7 @@ const visitCells = (row, col)=>{
     for(let neighbour of neighbours){
         const [nextRow, nextColumn, direction] = neighbour; // deconstructing array
          // see if the neighbour is out of bounds 
-        if(nextRow <0 || nextRow >=cellRows || nextColumn <0 || nextColumn >= CellCols){
+        if(nextRow <0 || nextRow >=CELL_ROWS || nextColumn <0 || nextColumn >= CELL_COLUMNS){
             continue;
         }
         // if we have visited a valid neigbour, continue to next neighbout
@@ -236,8 +236,35 @@ const visitCells = (row, col)=>{
 
 
 }
-console.log("grid",grid);
+
 visitCells(startRow,startCol);
 //visitCells(startRow,startCol);
+console.log("grid",grid);
 console.log("verticals",verticals);
 console.log("horizontals",horizontals);
+
+//rendering walls 
+const unitLength = CANVAS_WIDTH / CELL_COLUMNS;
+const unitHeight = CANVAS_HEIGHT / CELL_ROWS;
+const HORIZONTAL_WALL_HEIGHT = 10;
+const VERTICAL_WALL_WIDHT = 10;
+horizontals.forEach((row,rowIndex)=>{
+    console.log(row)
+    let count = 0;
+    row.forEach((open,columnIndex)=>{
+        if(open){
+            return;
+        }
+        const cx = columnIndex*unitLength + unitLength/2;
+        const cy = rowIndex * unitHeight + unitHeight;
+        const wall = Bodies.rectangle(cx,cy,
+            unitLength,HORIZONTAL_WALL_HEIGHT,{
+                isStatic: true
+            }
+        );
+        World.add(world,wall);
+    });
+
+});
+
+
