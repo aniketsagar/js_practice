@@ -62,7 +62,7 @@
 
 
 
-const {Engine, Render, Runner, Bodies, Composite, World} = Matter;
+const {Engine, Render, Runner, Bodies, Composite, World, Body} = Matter;
 const CANVAS_HEIGHT = 600;
 const CANVAS_WIDTH = 600;
 // create engine
@@ -311,23 +311,25 @@ console.log("ball",ball)
 
 document.addEventListener("keydown",(event)=>{
     console.log("event",event)
+    const x = ball.velocity.x;
+    const y = ball.velocity.y;
     if(event.key === "w" || event.key === "ArrowUp"){
         console.log("move up");
-        ball.velocity.y = 5;
+        Body.setVelocity(ball,{x:x, y : y - 5});
     }
 
     if(event.key === "s" || event.key === "ArrowDown"){
         console.log("move down");
-        ball.velocity.y = -5;
+         Body.setVelocity(ball,{x:x, y : y + 5});
     }
 
     if(event.key === "a" || event.key === "ArrowLeft"){
         console.log("move left");
-        ball.velocity.x = -5;
+        Body.setVelocity(ball,{x:x - 5, y : y});
     }
     if(event.key === "d" || event.key === "ArrowRight"){
         console.log("move right");
-        ball.velocity.y = 5;
+        Body.setVelocity(ball,{x:x + 5, y : y});
     }
 
 });
