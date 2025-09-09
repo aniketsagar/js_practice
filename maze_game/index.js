@@ -155,9 +155,21 @@ const startCol = Math.floor(Math.random()*CellCols);
 
 const visitCells = (row, col)=>{
     // if the cell is visited at row col, then return null
+        if(grid[row][col]){
+            return;
+        }
     // else
     // Mark this cell row and col as visited
+    grid[row][col] = true;
     // Assamble rendomly ordered list of neighbours
+
+    // above c[row-1][col] below c[row+1][col]  right c[row][col+1] left [row][col-1]
+    const neighbours = [
+        [row-1, col],
+        [row+1, col],
+        [row, col-1],
+        [row, col+1]
+    ]
     // for each neighbour in the above list
     // see if the neighbour is out of bounds 
     // remove the above neighbour from the list 
@@ -166,3 +178,6 @@ const visitCells = (row, col)=>{
 
 
 }
+
+visitCells(startRow,startCol);
+console.log(grid);
