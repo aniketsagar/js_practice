@@ -372,7 +372,7 @@ Events.on(engine, "collisionStart",(event)=>{
             world.bodies.forEach((body)=>{
                 if(body.label === "wall"){
                     Body.setStatic(body,false);
-                    console.log(body)
+                    console.log(body.position)
                 }
             });
             
