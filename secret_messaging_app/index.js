@@ -7,4 +7,5 @@ document.querySelector("form").addEventListener("submit",(event)=>{
     let b64Input = btoa(input.value);
     console.log(b64Input)
     document.querySelector("#link-input").value = b64Input;
+    console.log( document.querySelector("#link-input").value)
 });
