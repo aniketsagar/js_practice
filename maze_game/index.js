@@ -63,8 +63,8 @@
 
 
 const {Engine, Render, Runner, Bodies, Composite, World, Body, Events} = Matter;
-const CANVAS_HEIGHT = 600;
-const CANVAS_WIDTH = 600;
+const CANVAS_HEIGHT = window.innerHeight;//600;
+const CANVAS_WIDTH = window.innerWidth;//600;
 // create engine
 const  engine = Engine.create();
 engine.world.gravity.y = 0;
@@ -142,8 +142,8 @@ for(let i = 0; i<3; i++){
 };
 
 //using map
-const CELL_ROWS = 3;
-const CELL_COLUMNS = 3;
+const CELL_ROWS = 10;
+const CELL_COLUMNS = 5;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
@@ -309,7 +309,7 @@ World.add(world,goal);
 //Ball
 const ball_cx = unitLength /2;
 const ball_cy = unitHeight /2 ;
-const ball_radius = (unitHeight+unitLength)/8;
+const ball_radius = Math.min(unitHeight, unitLength)/4;
 const ball = Bodies.circle(ball_cx, ball_cy, ball_radius, {
     label:"ball"
 });
@@ -358,8 +358,10 @@ Events.on(engine, "collisionStart",(event)=>{
             world.bodies.forEach((body)=>{
                 if(body.label === "wall"){
                     Body.setStatic(body,false);
+                    console.log(body)
                 }
             });
+            
         }
     });
     
