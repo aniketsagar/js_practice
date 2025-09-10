@@ -143,7 +143,7 @@ for(let i = 0; i<3; i++){
 };
 
 //using map
-const CELL_ROWS = 10;
+const CELL_ROWS = 3;
 const CELL_COLUMNS = 5;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
@@ -367,6 +367,7 @@ Events.on(engine, "collisionStart",(event)=>{
             labels.includes(collison.bodyB.label)
         ){
             console.log("User won!!!");
+            document.querySelector(".winner").classList.remove("hidden");
             world.gravity.y = 1;
             world.bodies.forEach((body)=>{
                 if(body.label === "wall"){
