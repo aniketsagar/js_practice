@@ -78,6 +78,7 @@ const render = Render.create({
     options: {
         width: CANVAS_WIDTH,
         height: CANVAS_HEIGHT
+      
     },
 });
 
@@ -141,7 +142,7 @@ for(let i = 0; i<3; i++){
 };
 
 //using map
-const CELL_ROWS = 5;
+const CELL_ROWS = 10;
 const CELL_COLUMNS = 10;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
@@ -260,7 +261,9 @@ horizontals.forEach((row,rowIndex)=>{
         const cy = rowIndex * unitHeight + unitHeight;
         const wall = Bodies.rectangle(cx,cy,
             unitLength,HORIZONTAL_CELL_WALL_HEIGHT,{
+                label:"wall",
                 isStatic: true
+
             }
         );
         World.add(world,wall);
@@ -280,6 +283,7 @@ verticals.forEach((row,rowIndex)=>{
         const cy = rowIndex*unitHeight + unitHeight/2;
         const wall = Bodies.rectangle(cx,cy,
             VERTICAL_CELL_WALL_WIDHT,unitHeight,{
+                label:"wall",
                 isStatic: true
             }
         );
@@ -349,7 +353,13 @@ Events.on(engine, "collisionStart",(event)=>{
             labels.includes(collison.bodyA.label) &&
             labels.includes(collison.bodyB.label)
         ){
-            console.log("User won!!!")
+            console.log("User won!!!");
+            world.gravity.y = 1;
+            world.bodies.forEach((body)=>{
+                if(body.label === "wall"){
+                    Body.setStatic(body,false);
+                }
+            });
         }
     });
     
