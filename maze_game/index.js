@@ -77,7 +77,8 @@ const render = Render.create({
     engine: engine, 
     options: {
         width: CANVAS_WIDTH,
-        height: CANVAS_HEIGHT
+        height: CANVAS_HEIGHT,
+        wireframes:false
       
     },
 });
@@ -262,7 +263,10 @@ horizontals.forEach((row,rowIndex)=>{
         const wall = Bodies.rectangle(cx,cy,
             unitLength,HORIZONTAL_CELL_WALL_HEIGHT,{
                 label:"wall",
-                isStatic: true
+                isStatic: true,
+                render:{
+                    fillStyle:"red"
+                }
 
             }
         );
@@ -284,7 +288,10 @@ verticals.forEach((row,rowIndex)=>{
         const wall = Bodies.rectangle(cx,cy,
             VERTICAL_CELL_WALL_WIDHT,unitHeight,{
                 label:"wall",
-                isStatic: true
+                isStatic: true,
+                render:{
+                    fillStyle:"red"
+                }
             }
         );
         World.add(world,wall);
@@ -300,7 +307,10 @@ const goal = Bodies.rectangle( goal_cx, goal_cy,
     unitLength * 0.7, 
     unitHeight * 0.7,{
         label:"goal",
-        isStatic :true
+        isStatic :true,
+        render:{
+            fillStyle:"green"
+        }
     }
 );
 
@@ -311,7 +321,10 @@ const ball_cx = unitLength /2;
 const ball_cy = unitHeight /2 ;
 const ball_radius = Math.min(unitHeight, unitLength)/4;
 const ball = Bodies.circle(ball_cx, ball_cy, ball_radius, {
-    label:"ball"
+    label:"ball",
+    render:{
+        fillStyle:"cyan"
+    }
 });
 
 
