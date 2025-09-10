@@ -142,8 +142,8 @@ for(let i = 0; i<3; i++){
 };
 
 //using map
-const CELL_ROWS = 10;
-const CELL_COLUMNS = 10;
+const CELL_ROWS = 3;
+const CELL_COLUMNS = 3;
 const grid = Array(CELL_ROWS).fill(null).map(()=>{return Array(CELL_COLUMNS).fill(false)});
 // grid.map()
 // grid.map(()=>{return Array(3).fill(false)});
