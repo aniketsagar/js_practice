@@ -3,7 +3,12 @@ hash = window.location.hash;
 console.log(hash)
 if(hash){
     let message = atob(hash.replace("#",""));
-    console.log("message",message);
+    if(message){
+        document.querySelector("#message-form").classList.add("hide");
+        document.querySelector("#message-show").classList.remove("hide");
+        document.querySelector("#message-show h1").innerText  = message;
+    }
+ 
 }
 document.querySelector("form").addEventListener("submit",(event)=>{
     event.preventDefault();
