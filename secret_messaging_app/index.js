@@ -9,4 +9,6 @@ document.querySelector("form").addEventListener("submit",(event)=>{
     const link_input = document.querySelector("#link-input");
     link_input.value =`${window.location}#${b64Input}`;
     link_input.select();
+   document.querySelector("#message-form").classList.add("hide");
+   document.querySelector("#link-form").classList.remove("hide");
 });
