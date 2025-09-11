@@ -1,5 +1,10 @@
 console.log("hello!! there!!")
-
+hash = window.location.hash;
+console.log(hash)
+if(hash){
+    let message = atob(hash.replace("#",""));
+    console.log("message",message);
+}
 document.querySelector("form").addEventListener("submit",(event)=>{
     event.preventDefault();
     const input = document.querySelector("#message-input");
