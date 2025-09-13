@@ -79,13 +79,16 @@ const cwd = process.cwd();
 
 
 //Wrap the last call with promise
-fs.readdir(cwd,(err,filenames)=>{
+fs.readdir(cwd, async (err,filenames)=>{
   try{
    //err = {"message":"test error"};
     if(err){
       throw new Error(err);
     }
-    
+    for(let filename of filenames){
+      const stats = await lstat(filename);
+      console.log(filename, stats.isFile());
+    }
   }catch(err){
     console.log("in catch");
     console.log(err);
@@ -115,5 +118,5 @@ const lstat_util_promsie = util.promisify(fs.lstat);
 
 // method 3 
 
-const lstats = fs.promises.lstat;
+const lstat = fs.promises.lstat;
 
