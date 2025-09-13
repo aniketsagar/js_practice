@@ -1,14 +1,15 @@
 console.log("hey there");
 
-import { readdir } from 'node:fs/promises';
+const fs = require("fs");
 
-let path = "C:\\"
-try {
-  const files = await readdir(path);
-  for (const file of files)
-    console.log(file);
-} catch (err) {
-  console.error(err);
-} 
+fs.readdir(".",(err,filenames)=>{
+  try{
+    console.log(filenames);
+  }catch(err){
+    console.log(err);
+    throw new Error(err);
+  }finally{
+    return;
+  }
 
-
+});
