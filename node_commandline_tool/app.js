@@ -29,43 +29,63 @@ const cwd = process.cwd();
 
 // });
 
+// // Callback based solution: Maintain an array of results from each lstat
+// fs.readdir(cwd,(err,filenames)=>{
+//   try{
+//    //err = {"message":"test error"};
+//     if(err){
+//       throw new Error(err);
+//     }
+//     //Callback based solution'
+//     console.log(filenames);
+//       const allStats= Array(filenames.length).fill(null);
+//       for( let filename of filenames){
+//         const index  = filenames.indexOf(filename);
+//         fs.lstat(filename,(err,stats)=>{
+//           err = {"message":"mock error"}
+
+//           try{
+//             if(err){
+//               throw new Error(err);
+//             }
+//             console.log(filename, stats.isFile());
+//             allStats[index] = (stats);
+//             const ready =  allStats.every((stats)=>{ // read about this 
+//               return stats;
+//             }); // 
+
+//             if(ready){
+//               allStats.forEach((stats, index)=>{
+//                 console.log(filenames[index], stats.isFile());
+//               });
+//             }
+
+//           }catch(err){
+//             console.log("error inside",err);
+//             throw new Error(err);
+//           }
+//         });
+//       }
+//       // THE Callback APPROCH ENDS HERE
+//   }catch(err){
+//     console.log("in catch");
+//     console.log(err);
+//     throw new Error(err);
+//   }finally{
+//     return;
+//   }
+
+// });
+
+
+//Wrap the last call with promise
 fs.readdir(cwd,(err,filenames)=>{
   try{
    //err = {"message":"test error"};
     if(err){
       throw new Error(err);
     }
-    //Callback based solution'
-    console.log(filenames);
-      const allStats= Array(filenames.length).fill(null);
-      for( let filename of filenames){
-        const index  = filenames.indexOf(filename);
-        fs.lstat(filename,(err,stats)=>{
-          err = {"message":"mock error"}
-
-          try{
-            if(err){
-              throw new Error(err);
-            }
-            console.log(filename, stats.isFile());
-            allStats[index] = (stats);
-            const ready =  allStats.every((stats)=>{ // read about this 
-              return stats;
-            }); // 
-
-            if(ready){
-              allStats.forEach((stats, index)=>{
-                console.log(filenames[index], stats.isFile());
-              });
-            }
-
-          }catch(err){
-            console.log("error inside",err);
-            throw new Error(err);
-          }
-        });
-      }
-      // THE Callback APPROCH ENDS HERE
+    
   }catch(err){
     console.log("in catch");
     console.log(err);
@@ -75,3 +95,16 @@ fs.readdir(cwd,(err,filenames)=>{
   }
 
 });
+
+
+
+const lstat = (filename)=>{
+  return new Promise((resolve, reject)=>{
+    fs.lstat (filename, (err, stats)=>{
+      if(err){
+        reject(err);
+      }
+      resolve(stats);
+    })
+  })
+}
