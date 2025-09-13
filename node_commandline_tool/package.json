@@ -10,6 +10,6 @@
   "license": "ISC",
   "description": "",
   "bin":{
-    "nls":"index.js"
+    "nls":"app.js"
   }
 }

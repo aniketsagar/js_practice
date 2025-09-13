@@ -1,5 +1,5 @@
+#!/usr/bin/env node
 console.log("hey there");
-
 const fs = require("fs");
 
 //const process = require("process")
