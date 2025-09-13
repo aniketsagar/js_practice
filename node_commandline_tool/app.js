@@ -77,17 +77,48 @@ const cwd = process.cwd();
 
 // });
 
+//SOLUTION 2:
 
-//Wrap the last call with promise
+// //Wrap the last call with promise
+// fs.readdir(cwd, async (err,filenames)=>{
+//   try{
+//    //err = {"message":"test error"};
+//     if(err){
+//       throw new Error(err);
+//     }
+//     for(let filename of filenames){
+//       const stats = await lstat(filename);
+//       console.log(filename, stats.isFile());
+//     }
+//   }catch(err){
+//     console.log("in catch");
+//     console.log(err);
+//     throw new Error(err);
+//   }finally{
+//     return;
+//   }
+
+// });
+
+
+
+
+//Promise . all based solution: we fire every call in parallel
+// in the previous solution we were serialy processing the data
 fs.readdir(cwd, async (err,filenames)=>{
   try{
    //err = {"message":"test error"};
     if(err){
       throw new Error(err);
     }
-    for(let filename of filenames){
-      const stats = await lstat(filename);
-      console.log(filename, stats.isFile());
+    const statPromises = filenames.map((filename)=>{
+      return lstat(filename);
+    });
+    const allStats = await Promise.all(statPromises);
+
+    for(let stat of allStats){
+      const index = allStats.indexOf(stat);
+      console.log(filenames[index],stat.isFile());
     }
   }catch(err){
     console.log("in catch");
@@ -98,7 +129,6 @@ fs.readdir(cwd, async (err,filenames)=>{
   }
 
 });
-
 
 // Method 1;
 const lstat_custom_promise = (filename)=>{
