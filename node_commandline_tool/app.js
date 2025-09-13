@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 console.log("hey there");
 const fs = require("fs");
-
+const util = require("util");
 //const process = require("process")
 const cwd = process.cwd();
 
@@ -97,8 +97,8 @@ fs.readdir(cwd,(err,filenames)=>{
 });
 
 
-
-const lstat = (filename)=>{
+// Method 1;
+const lstat_custom_promise = (filename)=>{
   return new Promise((resolve, reject)=>{
     fs.lstat (filename, (err, stats)=>{
       if(err){
@@ -108,3 +108,12 @@ const lstat = (filename)=>{
     })
   })
 }
+
+// method 2
+
+const lstat_util_promsie = util.promisify(fs.lstat);
+
+// method 3 
+
+const lstats = fs.promises.lstat;
+
