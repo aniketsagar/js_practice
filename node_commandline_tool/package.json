@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "bin":{
-    "nls":"app.js"
+  "bin": {
+    "nls": "app.js"
+  },
+  "dependencies": {
+    "yoctocolors": "^2.1.2"
   }
 }
