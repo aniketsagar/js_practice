@@ -2,9 +2,12 @@
 console.log("hey there");
 const fs = require("fs");
 const util = require("util");
+const ycolor = require("yoctocolors");
+
+//console.log("chalk",chalk)
+
 //const process = require("process")
 const cwd = process.cwd();
-
 // fs.readdir(cwd,(err,filenames)=>{
 //   try{
 //     console.log(filenames);
@@ -115,10 +118,15 @@ fs.readdir(cwd, async (err,filenames)=>{
       return lstat(filename);
     });
     const allStats = await Promise.all(statPromises);
-
+    
     for(let stat of allStats){
       const index = allStats.indexOf(stat);
-      console.log(filenames[index],stat.isFile());
+      if(stat.isFile()){
+        console.log(ycolor.yellow(filenames[index] ));
+      }else{
+        console.log(ycolor.bold(ycolor.blue(filenames[index] )));
+      }
+      //console.log(filenames[index],stat.isFile());
     }
   }catch(err){
     console.log("in catch");
