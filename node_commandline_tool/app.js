@@ -3,11 +3,9 @@ console.log("hey there");
 const fs = require("fs");
 const util = require("util");
 const ycolor = require("yoctocolors");
-
-//console.log("chalk",chalk)
-
-//const process = require("process")
+const path = require("path");
 const cwd = process.cwd();
+const targetDir = process.argv[2] || cwd;
 // fs.readdir(cwd,(err,filenames)=>{
 //   try{
 //     console.log(filenames);
@@ -108,14 +106,15 @@ const cwd = process.cwd();
 
 //Promise . all based solution: we fire every call in parallel
 // in the previous solution we were serialy processing the data
-fs.readdir(cwd, async (err,filenames)=>{
+fs.readdir(targetDir, async (err,filenames)=>{
   try{
    //err = {"message":"test error"};
     if(err){
       throw new Error(err);
     }
+ 
     const statPromises = filenames.map((filename)=>{
-      return lstat(filename);
+      return lstat(path.join(targetDir,filename));
     });
     const allStats = await Promise.all(statPromises);
     
