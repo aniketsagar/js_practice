@@ -4,6 +4,7 @@ const debounce = require("lodash.debounce"); // to add time delay in invoking us
 const program = require("caporal")
 const fs = require("fs");
 const {spawn} = require("child_process");
+const ycolor = require("yoctocolors");
 console.log("Hello!! this is  a node project runner", spawn);
 
 
@@ -18,11 +19,18 @@ program
     }catch (err){
         throw new Error(`Could not find the file ${name}`);
     }
-    
+    let process_id = undefined;
     const start = debounce (()=>{
-        console.log("Starting users program");
+       
         //child_process.spawn(command[, args][, options])
-        spawn("node",[name],{stdio:"inherit"});
+        //https://nodejs.org/docs/latest/api/child_process.html#child_processspawncommand-args-options
+       if(process_id){
+            
+            console.log(ycolor.bold(ycolor.red(`Killing process_id: ${process_id.pid}`)));
+            process_id.kill;
+        }
+        console.log(ycolor.bold(ycolor.blue("Starting process ->>>>>")));
+        process_id =  spawn("node",[name],{stdio:"inherit"});
 
     }, 100);
     chokidar.watch(".",{ignored:(path)=>path.endsWith("node_modules")})
