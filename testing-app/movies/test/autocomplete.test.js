@@ -1,3 +1,21 @@
+const waitFor = async (selector) => {
+  return new Promise((resolve, reject)=>{
+    const intervalId = setInterval(()=>{
+      if(document.querySelector(selector)){
+        clearInterval(intervalId);
+        clearTimeout(timeoutId);
+        resolve();
+      }
+    }, 30);
+    const timeoutId = setTimeout(()=>{
+      clearInterval(intervalId);
+      reject();
+    },2000)
+  });
+};
+
+
+
 beforeEach(() => { // hook provided by mocha, this executes before each testcase
   document.querySelector("#target").innerHTML = "";
   createAutoComplete(
@@ -28,10 +46,11 @@ it("Dropdown starts closed",()=>{
 }); 
 
 
-it("After searching, dropdown opens up", ()=>{
+it("After searching, dropdown opens up", async ()=>{
   const input = document.querySelector(".input");
   input.value = "Avengers";
   input.dispatchEvent(new Event("input"));   // dispatching the input event
+  await waitFor(".dropdown-item");
   const dropdown = document.querySelector(".dropdown");
   
   expect(dropdown.className).to.include("is-active");
