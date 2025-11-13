@@ -2,12 +2,29 @@ const fs = require("fs");
 const path = require("path");
 class Runner{
   constructor(){
-    this.file = []
+    this.testFiles= []
   }
   
   async collectFiles(targetPath) { 
     const files = await fs.promises.readdir(targetPath);
-    return files;
+
+    for(let file of files){
+     
+      const filePath = path.join(targetPath, file);
+      //console.log("filePath>>>>>",filePath);
+      const stats = await fs.promises.lstat(filePath);
+
+      if(stats.isFile() && file.includes(".test.js")){
+        this.testFiles.push({name:filePath});
+      }else if(stats.isDirectory()){
+        const childFiles = await fs.promises.readdir(filePath);
+        files.push(...childFiles.map((childFile)=>{
+          return path.join(file,childFile)
+        }));
+      }
+    }
+
+    return this.testFiles;
   }
 
 };
