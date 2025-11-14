@@ -7,8 +7,11 @@
   },
   "author": "",
   "license": "ISC",
-  "bin":{
-    "tme":"app.js"
+  "bin": {
+    "tme": "app.js"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "yoctocolors": "^2.1.2"
+  }
 }
