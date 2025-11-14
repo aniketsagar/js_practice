@@ -34,17 +34,28 @@ class Runner{
         });
         try{
           fn();
-          console.log( this.colorCodeMessage("green",`OK - ${description}`,{bold:false}));
+          console.log( this.colorCodeMessage(
+            "green",`\tOK - ${description}`
+            ,{bold:false})
+          );
         }catch(err){
-          console.log(this.colorCodeMessage("red",`X-${description}`,{bold:false}));
-          console.log("\t",err.message);
+
+          console.log(this.colorCodeMessage(
+            "red",`\tX-${description}`,
+            {bold:false})
+          );
+          const message = err.message.replace(/\n/g,"\n\t\t");
+          console.log("\t",message);
         } 
       }
       try{
 
         require(file.name); // this is used to run the files, require executes the files?? 
       }catch(err){
-        console.log(this.colorCodeMessage("red","X- Error loading file - \t",{bold:false}), file.relPath );
+        console.log(this.colorCodeMessage(
+          "red","X- Error loading file - \t",
+          {bold:false}), file.relPath 
+        );
         console.log("\t",err);
       } 
     }
