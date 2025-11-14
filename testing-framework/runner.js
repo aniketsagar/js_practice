@@ -1,8 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const ycolor = require("yoctocolors");
+const render = require("./render");
 
 const ignoreDirs  = ["node_modules"];
+
 class Runner{
   constructor(){
     this.testFiles= []
@@ -27,6 +29,7 @@ class Runner{
       // global is on node env scope, like windows variable in browser, 
       // and is shared between file
       const beforeEachList = [];
+      global.render = render;
       global.beforeEach = (fn)=>{
         beforeEachList.push(fn)
       }
