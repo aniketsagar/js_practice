@@ -16,11 +16,21 @@ class Runner{
         beforeEachList.forEach((func)=>{
           return func();
         });
-        fn();
-        console.log(description);
+        try{
+          fn();
+          console.log(`OK - ${description}`);
+        }catch(err){
+          console.log(`X - ${description}`);
+          console.log("\t",err.message);
+        } 
       }
-      
-      require(file.name); // this is used to run the files, require executes the files?? 
+      try{
+
+        require(file.name); // this is used to run the files, require executes the files?? 
+      }catch(err){
+        console.log("X- Error loading file - \t", file.name );
+        console.log("\t",err);
+      } 
     }
   }
 
