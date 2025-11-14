@@ -2,7 +2,6 @@ const {forEach} = require("../index");
 const assert = require("assert");
 
 beforeEach(()=>{
-  console.log("Testing 123 123 123")
   numbers = [1,2,3];
 });
 
