@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const ycolor = require("yoctocolors");
+
+const ignoreDirs  = ["node_modules"];
 class Runner{
   constructor(){
     this.testFiles= []
@@ -73,7 +75,7 @@ class Runner{
 
       if(stats.isFile() && file.includes(".test.js")){
         this.testFiles.push({name:filePath, relPath:file});
-      }else if(stats.isDirectory()){
+      }else if(stats.isDirectory() && !ignoreDirs.includes(file)){
         const childFiles = await fs.promises.readdir(filePath);
         files.push(...childFiles.map((childFile)=>{
           return path.join(file,childFile)
