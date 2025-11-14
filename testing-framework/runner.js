@@ -33,18 +33,17 @@ class Runner{
       global.beforeEach = (fn)=>{
         beforeEachList.push(fn)
       }
-      global.it = (description, fn)=>{
+      global.it = async (description, fn)=>{
         beforeEachList.forEach((func)=>{
           return func();
         });
         try{
-          fn();
+          await fn();
           console.log( this.colorCodeMessage(
             "green",`\tOK - ${description}`
             ,{bold:false})
           );
         }catch(err){
-
           console.log(this.colorCodeMessage(
             "red",`\tX-${description}`,
             {bold:false})
